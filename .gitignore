@@ -1,0 +1,10 @@
+# Archivos sensibles
+.env
+
+# Jenkins data y logs
+*.cfg
+logs/**
+*.log
+
+# Volúmenes y cachés
+**/__pycache__/

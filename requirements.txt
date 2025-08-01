@@ -1,0 +1,14 @@
+flask_appbuilder
+psycopg2-binary
+asyncpg
+# Dependencias del proyecto
+langchain
+langchain-community
+langchain-experimental
+langchain-ollama
+langchain-qdrant
+qdrant-client
+pdfplumber
+requests
+fastembed
+fastembed-gpu
