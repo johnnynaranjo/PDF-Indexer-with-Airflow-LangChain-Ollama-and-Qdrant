@@ -66,13 +66,20 @@ USER_DESKTOP_PATH=/home/tu_usuario/Escritorio/pdfs
 ## 🚀 Iniciar el proyecto
 
 Renombra el archivo .env.example y modifica la ruta a tu carpeta de archivos pdf a indexar.
+
 Con Docker Compose:
+
+1. Construye las imagenes
 ```bash
-docker compose up --build
+docker compose --build
 ```
-Con Podman Compose:
+2. Lanza el contenedor **airflow-inint** 
 ```bash
-podman-compose --env-file .env up --build
+docker compose up airflow-init
+```
+3. Inicia todos los servicios 
+```bash
+docker compose up
 ```
 Accede a la interfaz web de Airflow:
 
