@@ -57,10 +57,6 @@ Contiene una aplicación web construida con **Streamlit** que funciona como una 
 USER_DESKTOP_PATH=/ruta/completa/a/tu/carpeta/pdf
 ```
 
-Ejemplo para Linux:
-```
-USER_DESKTOP_PATH=/home/tu_usuario/Escritorio/pdfs
-```
 ---
 
 ## 🚀 Iniciar el proyecto
@@ -73,7 +69,7 @@ Con Docker Compose:
 ```bash
 docker compose --build
 ```
-2. Lanza el contenedor **airflow-inint** 
+2. Lanza el contenedor **airflow-init** 
 ```bash
 docker compose up airflow-init
 ```
