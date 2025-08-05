@@ -30,7 +30,7 @@ Contiene una aplicación web construida con **Streamlit** que funciona como una 
 ├── .env
 ├── docker-compose.yml
 ├── Dockerfile
-├──requirements.txt
+├── requirements.txt
 └── README.md
 ```
 ---
@@ -65,9 +65,10 @@ USER_DESKTOP_PATH=/home/tu_usuario/Escritorio/pdfs
 
 ## 🚀 Iniciar el proyecto
 
+Renombra el archivo .env.example y modifica la ruta a tu carpeta de archivos pdf a indexar.
 Con Docker Compose:
 ```bash
-docker compose --env-file .env up --build
+docker compose up --build
 ```
 Con Podman Compose:
 ```bash
@@ -126,7 +127,7 @@ user_data/
 
 Si modificas requirements.txt, reconstruye los servicios:
 ```bash
-docker compose --env-file .env up --build
+docker compose up --build
 ```
 ---
 
@@ -143,7 +144,7 @@ curl http://localhost:11434/api/tags     # Ollama
 
 - El DAG no aparece en la UI: Asegúrate de que esté dentro de airflow/dags/ y que el contenedor haya sido reiniciado.
 
-- Archivos PDF no se procesan: Confirma que están en la carpeta incoming y que no hayan sido procesados antes.
+- Archivos PDF no se procesan: Actualiza la ruta al volumen compatido en el archivo .env antes de iniciar los contenedores. Confirma que están en la carpeta incoming y que no hayan sido procesados antes.
 
 - Error de location en QdrantVectorStore: Cambia el argumento por url=.
 
