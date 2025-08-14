@@ -24,7 +24,8 @@ INDEX_LOG = os.path.join(BASE_FOLDER, "indexed_files.json")
 QDRANT_URL = 'http://qdrant:6333'
 OLLAMA_URL = 'http://ollama:11434'
 COLLECTION_NAME = 'airflow_ingestion'
-EMBEDDING_MODEL_NAME = 'mxbai-embed-large' # Cambia esto al modelo que estés usando
+EMBEDDING_MODEL_NAME = 'nomic-embed-text' # Cambia esto al modelo que estés usando
+EMBEDDING_MODEL_SIZE = 2048  # Tamaño del modelo de embedding, ajusta según tu modelo
 
 default_args = {
     'owner': 'airflow',
@@ -110,7 +111,7 @@ def process_and_index():
         logger.info(f"Creando {COLLECTION_NAME} en Qdrant.")
         qdrant.create_collection(
             collection_name=COLLECTION_NAME,
-            vectors_config=VectorParams(size=1024, distance=Distance.COSINE),
+            vectors_config=VectorParams(size=EMBEDDING_MODEL_SIZE, distance=Distance.COSINE),
             # RetrievalMode=RetrievalMode.HYBRID,
             sparse_vectors_config={"bm25": {}}
         )
