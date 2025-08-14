@@ -111,7 +111,8 @@ def process_and_index():
         qdrant.create_collection(
             collection_name=COLLECTION_NAME,
             vectors_config=VectorParams(size=1024, distance=Distance.COSINE),
-            RetrievalMode=RetrievalMode.HYBRID
+            # RetrievalMode=RetrievalMode.HYBRID,
+            sparse_vectors_config={"bm25": {}}
         )
     else:
         logger.info(f"Coleccion {COLLECTION_NAME} ya existe en Qdrant.")
