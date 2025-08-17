@@ -113,7 +113,9 @@ def process_and_index():
             collection_name=COLLECTION_NAME,
             vectors_config=VectorParams(size=EMBEDDING_MODEL_SIZE, distance=Distance.COSINE),
             # RetrievalMode=RetrievalMode.HYBRID,
-            sparse_vectors_config={"bm25": {}}
+            # sparse_vectors_config={"bm25": {}}
+            sparse_vectors_config={"fastembed": {}}  # <-- Cambia aquí
+
         )
     else:
         logger.info(f"Coleccion {COLLECTION_NAME} ya existe en Qdrant.")
@@ -171,7 +173,8 @@ def process_and_index():
     chunks = splitter.split_documents(all_documents)
     logger.info("✅ 2/3 División completada")
 
-    sparse_model = FastEmbedSparse(model_name="Qdrant/bm25")
+    # sparse_model = FastEmbedSparse(model_name="Qdrant/bm25")
+    sparse_model = FastEmbedSparse(model_name="Qdrant/fastembed")  # <-- Cambia aquí
 
     QdrantVectorStore.from_documents(
         chunks,
