@@ -25,7 +25,7 @@ QDRANT_URL = 'http://qdrant:6333'
 OLLAMA_URL = 'http://ollama:11434'
 COLLECTION_NAME = 'airflow_ingestion'
 EMBEDDING_MODEL_NAME = 'nomic-embed-text' # Cambia esto al modelo que estés usando
-EMBEDDING_MODEL_SIZE = 2048  # Tamaño del modelo de embedding, ajusta según tu modelo
+EMBEDDING_MODEL_SIZE = 768  # Tamaño del modelo de embedding, ajusta según tu modelo
 
 default_args = {
     'owner': 'airflow',
