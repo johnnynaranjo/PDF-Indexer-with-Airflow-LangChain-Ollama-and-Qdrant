@@ -278,18 +278,14 @@ services:
 
   ollama:
     image: ollama/ollama
-    privileged: true      # Note: The 'privileged' mode is used to allow Ollama to access the GPU if available.
     ports:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+    runtime: nvidia     # habilita el runtime de NVIDIA en modo compose clásico
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "exec bash -c 'echo > /dev/tcp/localhost/11434 || exit 1'"]
