@@ -112,9 +112,7 @@ def process_and_index():
         qdrant.create_collection(
             collection_name=COLLECTION_NAME,
             vectors_config=VectorParams(size=EMBEDDING_MODEL_SIZE, distance=Distance.COSINE),
-            # RetrievalMode=RetrievalMode.HYBRID,
-            # sparse_vectors_config={"bm25": {}}
-            sparse_vectors_config={"fastembed": {}}  # <-- Cambia aquí
+            sparse_vectors_config={"bm25": {}}
 
         )
     else:
@@ -173,8 +171,16 @@ def process_and_index():
     chunks = splitter.split_documents(all_documents)
     logger.info("✅ 2/3 División completada")
 
-    # sparse_model = FastEmbedSparse(model_name="Qdrant/bm25")
-    sparse_model = FastEmbedSparse(model_name="Qdrant/fastembed")  # <-- Cambia aquí
+    # Verifica si la colección existe y si está vacía
+    recreate_collection = False
+    if not qdrant.collection_exists(COLLECTION_NAME):
+        recreate_collection = True
+    else:
+        stats = qdrant.get_collection(COLLECTION_NAME).get("points_count", 0)
+        if stats == 0:
+            recreate_collection = True
+
+    sparse_model = FastEmbedSparse(model_name="Qdrant/bm25")
 
     QdrantVectorStore.from_documents(
         chunks,
@@ -184,6 +190,7 @@ def process_and_index():
         prefer_grpc=True,
         collection_name=COLLECTION_NAME,
         retrieval_mode=RetrievalMode.HYBRID,
+        force_recreate=recreate_collection,  # recrear la colección en el primer ciclo
     )
     logger.info("✅ 3/3 Índice vectorial creado")
 
