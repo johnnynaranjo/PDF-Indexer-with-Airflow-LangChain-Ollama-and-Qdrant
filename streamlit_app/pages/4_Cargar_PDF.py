@@ -125,7 +125,7 @@ def qdrant_create_vector_index(url, container_name, embedding_model_name, collec
     # Verifica si hay colecciones existentes
     if status == True:
 
-        embeddings_model = OllamaEmbeddings(model=embedding_model_name)
+        embeddings_model = OllamaEmbeddings(model=embedding_model_name, embedding_size=st.session_state.embedding_dim)
 
         # seleccionar el modelo y hacer el pull si no existe
         with st.spinner("Semantic Chunker", show_time=True):
@@ -161,14 +161,23 @@ def main():
         page_title="Cargar PDF",
         page_icon="📁",
     )
-
     st.title("📁 Cargar PDF")
+    
+    # Verificar si hay modelos cargados en Ollama
+    ollama_check_model("http://ollama:11434", "Ollama")
 
     # Mostrar parámetros solo si hay modelos disponibles
     st.sidebar.title('Ajustes')
-
-    # Verificar si hay modelos cargados en Ollama
-    ollama_check_model("http://ollama:11434", "Ollama")
+    
+    # Campo para seleccionar el tamaño del embedding
+    embedding_dim = st.sidebar.selectbox(
+        "Tamaño del embedding:",
+        options=[384, 512, 768, 1024, 1536],
+        index=2,  # Por defecto 768
+        key="embedding_dim"
+    )
+    # Guarda el valor en session_state para acceso global
+    st.session_state.embedding_dim = embedding_dim
 
     # Opción para subir archivo o carpeta
     upload_option = st.sidebar.radio("Selecciona fuente de datos:", ["Archivo PDF", "Carpeta con PDFs"])

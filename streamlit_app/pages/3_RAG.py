@@ -88,7 +88,7 @@ def qdrant_check_db(url, container_name: str):
 # ----------------------------- RECUPERACIÓN DE DOCUMENTOS -----------------------------
 
 def retrieve_with_scores(client: QdrantClient, collection_name: str, query: str, embedding_model: str, top_k: int = 5) -> List[Tuple[str, float]]:
-    dense_embeddings = OllamaEmbeddings(model=embedding_model)
+    dense_embeddings = OllamaEmbeddings(model=embedding_model, embedding_size=st.session_state.embedding_dim)
     query_vector = dense_embeddings.embed_query(query)
     search_result = client.search(
         collection_name=collection_name,
@@ -137,8 +137,23 @@ def main():
     )
     st.title("🤖 Chatea con RAG")
 
+    # Verificar si hay modelos cargados en Ollama
     ollama_check_model("http://ollama:11434", "Ollama")
+    # y si hay colecciones en Qdrant
     client = qdrant_check_db("http://qdrant:6333", "Qdrant")
+    
+    # Mostrar parámetros solo si hay modelos disponibles
+    st.sidebar.title('Ajustes')
+
+    # Campo para seleccionar el tamaño del embedding
+    embedding_dim = st.sidebar.selectbox(
+        "Tamaño del embedding:",
+        options=[384, 512, 768, 1024, 1536],
+        index=2,  # Por defecto 768
+        key="embedding_dim"
+    )
+    # Guarda el valor en session_state para acceso global
+    st.session_state.embedding_dim = embedding_dim
 
     st.sidebar.selectbox(
         "Embeddings disponibles:",

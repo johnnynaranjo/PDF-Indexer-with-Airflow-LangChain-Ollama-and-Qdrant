@@ -68,7 +68,6 @@ def main():
         page_title="Chatea con Ollama",
         page_icon="🦜",
     )
-
     st.title("🦜 Chatea con Ollama")
 
     # Verificar si hay modelos cargados en Ollama

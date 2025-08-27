@@ -100,7 +100,8 @@ def qdrant_create_db(db_to_create, client):
     # Crea la coleccion en Qdrant
     client.create_collection(
         collection_name=db_to_create,
-        vectors_config=VectorParams(size=1024, distance=Distance.COSINE),
+        vectors_config=VectorParams(size=st.session_state.embedding_dim, distance=Distance.COSINE),
+        sparse_vectors_config={"bm25": {}}
     )
     # Verifica que se ha creado la colección
     if client.collection_exists(db_to_create):
@@ -135,7 +136,6 @@ def main():
         page_title="Ajustes de la aplicación",
         page_icon="⚙️",
     )
-
     st.title("⚙️ Ajustes de la aplicación")
 
     # Verificar si hay modelos cargados en Ollama

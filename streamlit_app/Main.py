@@ -23,6 +23,8 @@ def main():
     # Initialize chat history
     if "rag_messages" not in st.session_state:
         st.session_state.rag_messages = []
+    if "embedding_dim" not in st.session_state:
+        st.session_state.embedding_dim = 1024
 
     st.set_page_config(
     page_title="streamlit-ollama",
