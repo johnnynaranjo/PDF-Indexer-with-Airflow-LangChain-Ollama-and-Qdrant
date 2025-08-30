@@ -75,11 +75,16 @@ x-airflow-common:
     # Misma variable is used to set the Ollama host URL
     OLLAMA_HOST: http://ollama:11434
   volumes:
-    - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
-    - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
-    - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
-    - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
-    - ${USER_DESKTOP_PATH:-.}/user_data:/opt/airflow/user_data
+    # - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
+    # - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
+    # - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
+    # - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
+    # - ${USER_DESKTOP_PATH:-.}/user_data:/opt/airflow/user_data
+    - airflow_dags:/opt/airflow/dags
+    - airflow_logs:/opt/airflow/logs
+    - airflow_config:/opt/airflow/config
+    - airflow_plugins:/opt/airflow/plugins
+    - airflow_user_data:/opt/airflow/user_data
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -264,8 +269,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8501:8501"
-    volumes:
-      - ./streamlit_app:/app
+    # volumes:
+    #   - ./streamlit_app:/app
     depends_on:
       ollama:
         condition: service_healthy
@@ -315,6 +320,11 @@ volumes:
    postgres_data:
    qdrant_data:
    ollama_data:
+   airflow_dags:
+   airflow_logs:
+   airflow_config:
+   airflow_plugins:
+   airflow_user_data:
 
 networks:
   rag_app:
