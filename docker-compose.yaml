@@ -75,12 +75,12 @@ x-airflow-common:
     # Misma variable is used to set the Ollama host URL
     OLLAMA_HOST: http://ollama:11434
   volumes:
-    # - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
+    - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     # - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
     # - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     # - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     # - ${USER_DESKTOP_PATH:-.}/user_data:/opt/airflow/user_data
-    - airflow_dags:/opt/airflow/dags
+    # - airflow_dags:/opt/airflow/dags
     - airflow_logs:/opt/airflow/logs
     - airflow_config:/opt/airflow/config
     - airflow_plugins:/opt/airflow/plugins
@@ -320,7 +320,7 @@ volumes:
    postgres_data:
    qdrant_data:
    ollama_data:
-   airflow_dags:
+  #  airflow_dags:
    airflow_logs:
    airflow_config:
    airflow_plugins:
