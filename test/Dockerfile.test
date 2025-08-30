@@ -1,0 +1,18 @@
+# Dockerfile.test
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copiar dependencias (aunque sea solo pytest por ahora)
+COPY test/requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar el código fuente que quieres probar
+COPY streamlit_app/ ./streamlit_app
+
+# Copiar pruebas (si están en carpeta test/ o puedes incluirlas en streamlit_app)
+COPY test/tests/ ./tests
+
+# Comando para ejecutar las pruebas
+CMD ["pytest", "tests", "--junitxml=resultado.xml"]

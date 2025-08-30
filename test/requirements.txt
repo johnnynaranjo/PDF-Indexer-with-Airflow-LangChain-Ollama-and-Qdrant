@@ -1,0 +1,8 @@
+pytest
+requests
+qdrant-client
+langchain
+streamlit
+ollama
+langchain-ollama
+langchain-qdrant
