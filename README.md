@@ -61,7 +61,7 @@ USER_DESKTOP_PATH=/ruta/completa/a/tu/carpeta/pdf
 
 ## 🚀 Iniciar el proyecto
 
-Renombra el archivo .env.example y modifica la ruta a tu carpeta de archivos pdf a indexar.
+Renombra el archivo .env.example a .env y modifica la ruta a tu carpeta de archivos pdf a indexar.
 
 Con Docker Compose:
 
