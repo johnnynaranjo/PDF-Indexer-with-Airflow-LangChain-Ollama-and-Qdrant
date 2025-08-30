@@ -176,8 +176,6 @@ def main():
         index=2,  # Por defecto 768
         key="embedding_dim"
     )
-    # Guarda el valor en session_state para acceso global
-    st.session_state.embedding_dim = embedding_dim
 
     # Opción para subir archivo o carpeta
     upload_option = st.sidebar.radio("Selecciona fuente de datos:", ["Archivo PDF", "Carpeta con PDFs"])

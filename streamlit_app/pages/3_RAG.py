@@ -152,8 +152,6 @@ def main():
         index=2,  # Por defecto 768
         key="embedding_dim"
     )
-    # Guarda el valor en session_state para acceso global
-    st.session_state.embedding_dim = embedding_dim
 
     st.sidebar.selectbox(
         "Embeddings disponibles:",

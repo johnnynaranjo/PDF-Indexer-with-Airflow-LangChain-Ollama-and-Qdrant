@@ -151,10 +151,6 @@ def main():
     # Verificar si hay modelos cargados en Qdrant
     client = qdrant_check_db("http://qdrant:6333", "Qdrant")
 
-    # # Dimension del embedding
-    # embedding_dim = st.sidebar.number_input("Dimensión del embedding", value=1024, step=1)
-    # st.session_state.embedding_dim = int(embedding_dim)
-
     if client is not None:
         # Opción para crear nueva colección
         with st.form("vector_form"):
