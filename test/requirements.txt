@@ -1,8 +1,9 @@
 pytest
 requests
 qdrant-client
-langchain
 streamlit
 ollama
+langchain
 langchain-ollama
 langchain-qdrant
+langchain-community
