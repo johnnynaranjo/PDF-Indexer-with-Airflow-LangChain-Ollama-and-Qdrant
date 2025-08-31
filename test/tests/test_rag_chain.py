@@ -1,4 +1,4 @@
-from streamlit_app.main import generate_response_with_context
+from streamlit_app.Main import generate_response_with_context
 
 def test_generate_response_stream():
     context = ["LangChain es una librería útil.", "Ollama provee LLMs."]

@@ -1,4 +1,4 @@
-from streamlit_app.main import retrieve_with_scores
+from streamlit_app.Main import retrieve_with_scores
 from unittest.mock import MagicMock
 
 def test_retrieve_with_scores_returns_data():

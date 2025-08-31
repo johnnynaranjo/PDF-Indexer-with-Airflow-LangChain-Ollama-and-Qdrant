@@ -1,4 +1,4 @@
-from streamlit_app.main import retrieve_with_scores, generate_response_with_context
+from streamlit_app.Main import retrieve_with_scores, generate_response_with_context
 
 def test_full_chat_pipeline():
     class MockClient:
