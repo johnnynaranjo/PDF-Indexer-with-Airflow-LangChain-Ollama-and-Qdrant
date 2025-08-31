@@ -1,5 +1,7 @@
-import streamlit as st
+# Utils
 import requests
+# App and models
+import streamlit as st
 
 # URL de la API pública de modelos de Ollama
 API_URL = "https://ollamadb.dev/api/v1/models"
@@ -12,7 +14,6 @@ def main():
         page_title="Modelos disponibles para descargar en Ollama",
         page_icon="📚",
     )
-
     st.title("📚 Modelos disponibles para descargar en Ollama")
 
     # Parámetros de búsqueda
