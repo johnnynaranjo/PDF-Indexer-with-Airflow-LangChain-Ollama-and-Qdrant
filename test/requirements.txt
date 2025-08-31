@@ -7,3 +7,4 @@ langchain
 langchain-ollama
 langchain-qdrant
 langchain-community
+langchain-experimental
