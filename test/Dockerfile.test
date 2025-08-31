@@ -14,5 +14,8 @@ COPY streamlit_app/ ./streamlit_app
 # Copiar pruebas (si están en carpeta test/ o puedes incluirlas en streamlit_app)
 COPY test/tests/ ./tests
 
+# Establecer PYTHONPATH para que las pruebas puedan encontrar el módulo
+ENV PYTHONPATH=/app
+
 # Comando para ejecutar las pruebas
 CMD ["pytest", "tests", "--junitxml=resultado.xml"]
