@@ -13,7 +13,7 @@ COPY . /app/streamlit_app
 
 # Install Python dependencies
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+    pip install -r /app/requirements.txt
 
 # Streamlit default port
 EXPOSE 8501
