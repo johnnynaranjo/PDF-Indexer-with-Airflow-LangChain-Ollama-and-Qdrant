@@ -1,5 +1,5 @@
 # Utils
-from streamlit_app.utils import ollama_check_model, ollama_generator
+from utils import ollama_check_model, ollama_generator
 # App and models
 import streamlit as st
 

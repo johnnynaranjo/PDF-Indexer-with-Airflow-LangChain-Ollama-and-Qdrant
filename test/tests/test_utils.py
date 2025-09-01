@@ -1,4 +1,4 @@
-from streamlit_app import utils
+from streamlit_app.pages import utils
 import pytest
 
 def test_check_connection_success(monkeypatch):
