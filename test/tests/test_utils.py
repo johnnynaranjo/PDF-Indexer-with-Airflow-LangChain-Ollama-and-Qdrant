@@ -1,4 +1,4 @@
-from streamlit_app.pages import utils
+from streamlit_app.utils import check_connection
 import pytest
 
 def test_check_connection_success(monkeypatch):
@@ -6,4 +6,4 @@ def test_check_connection_success(monkeypatch):
     class MockResponse:
         status_code = 200
     monkeypatch.setattr(requests, "get", lambda *args, **kwargs: MockResponse())
-    assert utils.check_connection("http://mock-url", "mock") == True
+    assert check_connection("http://mock-url", "mock") == True

@@ -1,5 +1,5 @@
 # Utils
-from utils import ollama_check_model, qdrant_check_db, qdrant_create_db, qdrant_delete_db, ollama_pull_model, ollama_delete_model
+from streamlit_app.utils import ollama_check_model, qdrant_check_db, qdrant_create_db, qdrant_delete_db, ollama_pull_model, ollama_delete_model
 # App and models
 import streamlit as st
 

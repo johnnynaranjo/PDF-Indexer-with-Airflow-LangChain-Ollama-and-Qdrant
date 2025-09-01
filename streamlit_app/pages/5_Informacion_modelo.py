@@ -1,5 +1,5 @@
 # Utils
-from utils import ollama_model_info
+from streamlit_app.utils import ollama_model_info
 # App and models
 import streamlit as st
 import ollama

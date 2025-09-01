@@ -1,5 +1,5 @@
 # Utils
-from utils import ollama_check_model, qdrant_check_db, retrieve_with_scores, generate_response_with_context
+from streamlit_app.utils import ollama_check_model, qdrant_check_db, retrieve_with_scores, generate_response_with_context
 # App and models
 import streamlit as st
 import ollama

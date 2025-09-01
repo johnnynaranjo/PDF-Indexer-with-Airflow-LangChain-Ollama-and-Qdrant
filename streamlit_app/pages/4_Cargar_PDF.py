@@ -1,5 +1,5 @@
 # Utils
-from utils import ollama_check_model, qdrant_check_db, load_pdf, load_pdfs_from_folder, qdrant_create_vector_index
+from streamlit_app.utils import ollama_check_model, qdrant_check_db, load_pdf, load_pdfs_from_folder, qdrant_create_vector_index
 import os
 # App and models
 import streamlit as st

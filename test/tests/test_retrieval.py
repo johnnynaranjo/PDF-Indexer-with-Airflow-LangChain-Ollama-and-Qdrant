@@ -1,4 +1,4 @@
-from streamlit_app.pages.utils import retrieve_with_scores
+from streamlit_app.utils import retrieve_with_scores
 from unittest.mock import MagicMock
 
 COLLECTION_NAME = "test_collection"

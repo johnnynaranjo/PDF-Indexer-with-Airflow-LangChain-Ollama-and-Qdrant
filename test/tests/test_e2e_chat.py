@@ -1,4 +1,4 @@
-from streamlit_app.pages.utils import retrieve_with_scores, generate_response_with_context
+from streamlit_app.utils import retrieve_with_scores, generate_response_with_context
 
 COLLECTION_NAME = "test_collection"
 QUERY = "¿Qué es LangChain?"

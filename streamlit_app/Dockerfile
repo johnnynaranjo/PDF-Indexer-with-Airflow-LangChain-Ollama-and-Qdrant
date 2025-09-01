@@ -8,8 +8,8 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
-# Copy everything from local streamlit_app/ into the container’s /app/
-COPY . /app
+# Copiar todo lo que está en ./streamlit_app (contexto) a /app/streamlit_app
+COPY . /app/streamlit_app
 
 # Install Python dependencies
 RUN pip install --upgrade pip && \
@@ -19,4 +19,4 @@ RUN pip install --upgrade pip && \
 EXPOSE 8501
 
 # Run Streamlit app
-CMD ["streamlit", "run", "Main.py", "--server.port=8501", "--server.enableCORS=false"]
+CMD ["streamlit", "run", "streamlit_app/Main.py", "--server.port=8501", "--server.enableCORS=false"]
