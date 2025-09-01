@@ -18,5 +18,8 @@ RUN pip install --upgrade pip && \
 # Streamlit default port
 EXPOSE 8501
 
+# Set environment variables
+ENV PYTHONPATH=/app
+
 # Run Streamlit app
 CMD ["streamlit", "run", "streamlit_app/Main.py", "--server.port=8501", "--server.enableCORS=false"]
