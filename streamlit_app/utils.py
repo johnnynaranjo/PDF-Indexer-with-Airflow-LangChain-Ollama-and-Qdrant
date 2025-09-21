@@ -25,6 +25,10 @@ from langchain_core.output_parsers import StrOutputParser
 # ----------------------------- CONEXIONES Y CHEQUEOS -----------------------------
 
 def check_connection(url, container_name: str):
+    """
+    Comprueba la conexión HTTP con un contenedor.
+    Devuelve True si la conexión es exitosa, False en caso contrario.
+    """
     session_key = f"{container_name}_connection_ok"
     if st.session_state.get(session_key, False):
         return True
@@ -51,6 +55,10 @@ def check_connection(url, container_name: str):
         return False
 
 def ollama_check_model(url, container_name: str):
+    """
+    Devuelve una lista de nombres de modelos disponibles en Ollama.
+    Lanza excepción si no hay conexión.
+    """
     if not check_connection(url, container_name):
         return
     try:
@@ -81,6 +89,10 @@ def qdrant_check_db(url, container_name: str):
 # ----------------------------- FUNCIONES DE PDF -----------------------------
 
 def load_pdf(uploaded_file):
+    """
+    Carga un PDF subido y devuelve una lista de documentos.
+    Elimina el archivo temporal tras su uso.
+    """
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
         tmp_file.write(uploaded_file.read())
         tmp_path = tmp_file.name
@@ -88,6 +100,9 @@ def load_pdf(uploaded_file):
     return loader.load()
 
 def load_pdfs_from_folder(folder_path):
+    """
+    Carga todos los PDFs de una carpeta y devuelve una lista de documentos.
+    """
     all_documents = []
     for root, _, files in os.walk(folder_path):
         for file in files:
@@ -99,6 +114,10 @@ def load_pdfs_from_folder(folder_path):
 
 # ----------------------------- MODELOS Y COLECCIONES -----------------------------
 def ollama_pull_model(model_name: str):
+    """
+    Descarga un modelo de Ollama.
+    Lanza excepción si falla.
+    """
     try:
         with st.spinner(f"Descargando modelo '{model_name}'...", show_time=True):
             ollama.pull(model_name)
@@ -126,6 +145,10 @@ def ollama_delete_model(url, container_name: str):
         st.error(f"Error al eliminar modelo: {e}")
 
 def ollama_model_info(url, model_name):
+    """
+    Devuelve la informacion de un modelo de Ollama.
+    Lanza excepción si falla.
+    """
     try:
         res = requests.post(f"{url}/api/show", json={"name": model_name})
         res.raise_for_status()
@@ -134,7 +157,10 @@ def ollama_model_info(url, model_name):
         return {"error": f"No se pudo obtener la información: {e}"}
 
 def qdrant_create_db(db_name, embedding_size, client):
-
+    """
+    Crea una nueva colección en Qdrant.
+    Lanza excepción si falla.
+    """
     # Crea la coleccion en Qdrant
     client.create_collection(
         collection_name=db_name,
@@ -148,6 +174,10 @@ def qdrant_create_db(db_name, embedding_size, client):
         st.error(f"No se pudo crear la colección '{db_name}'.")
 
 def qdrant_delete_db(url, container_name: str):
+    """
+    Elimina una colección de Qdrant.
+    Lanza excepción si falla.
+    """
     if not check_connection(url, container_name):
         return
 
@@ -169,6 +199,10 @@ def qdrant_delete_db(url, container_name: str):
 # ----------------------------- VECTOR STORE -----------------------------
 
 def qdrant_create_vector_index(url, container_name, embedding_model_name, embedding_size, collection_name, documents):
+    """
+    Crea un índice vectorial en Qdrant a partir de documentos.
+    Lanza excepción si falla.
+    """
     # verifica si el contenedor de Qdrant está en ejecución
     status = check_connection(url, container_name)
 
@@ -209,6 +243,9 @@ def qdrant_create_vector_index(url, container_name, embedding_model_name, embedd
 # ----------------------------- RECUPERACIÓN DE DOCUMENTOS -----------------------------
 
 def retrieve_with_scores(client: QdrantClient, collection_name: str, query: str, embedding_model: str, embedding_size, top_k: int = 5) -> List[Tuple[str, float]]:
+    """
+    Recupera documentos similares de Qdrant y devuelve una lista de tuplas (contenido, score).
+    """
     dense_embeddings = OllamaEmbeddings(model=embedding_model, embedding_size=embedding_size)
     query_vector = dense_embeddings.embed_query(query)
     search_result = client.search(
@@ -223,7 +260,10 @@ def retrieve_with_scores(client: QdrantClient, collection_name: str, query: str,
 # ----------------------------- GENERACIÓN RAG -----------------------------
 
 def generate_response_with_context(model_name: str, context_docs: List[str], query: str, temp: float = 0.1) -> Iterator[str]:
-
+    """
+    Genera una respuesta usando un modelo LLM y contexto.
+    Devuelve la respuesta completa como string.
+    """
     llm = OllamaLLM(model=model_name, temperature=temp)
     prompt = PromptTemplate.from_template(
         """Responde la siguiente pregunta usando el contexto proporcionado. 
@@ -252,14 +292,9 @@ def generate_response_with_context(model_name: str, context_docs: List[str], que
 # ----------------------------- GENERACIÓN LLM -----------------------------
 
 def ollama_generator(model_name: str, messages: Dict) -> Generator:
-    stream = ollama.chat(
-        model=model_name,
-        messages=messages,
-        stream=True
-        )
-    for chunk in stream:
-        yield chunk['message']['content']
-
+    """
+    Generador que produce la respuesta de Ollama en streaming.
+    """
     stream = ollama.chat(
         model=model_name,
         messages=messages,
